@@ -189,5 +189,17 @@ equationsContainer.addEventListener('click', (e) => {
     }
 });
 
+// Collapse toggle functionality
+document.querySelectorAll('.collapse-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+        const fieldset = button.closest('fieldset');
+        const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+        button.setAttribute('aria-expanded', !isExpanded);
+        button.textContent = isExpanded ? '+' : '−';
+        fieldset.classList.toggle('collapsed', isExpanded);
+    });
+});
+
 // Generate initial equations on load
 generateAllEquations();
