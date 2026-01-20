@@ -32,7 +32,7 @@ function getOperandRange(digitMode, upperLimit) {
         case 'single':
             return { min: 1, max: Math.min(9, upperLimit) };
         case 'double':
-            return { min: 10, max: upperLimit };
+            return { min: 1, max: Math.min(99, upperLimit) };
         default:
             return { min: 1, max: upperLimit };
     }
