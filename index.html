@@ -14,59 +14,55 @@
 
         <form id="config">
             <fieldset>
-                <legend>Operation</legend>
-                <label>
-                    <input type="radio" name="operation" value="both" checked>
-                    Addition & Subtraction
-                </label>
-                <label>
-                    <input type="radio" name="operation" value="addition">
-                    Addition only
-                </label>
-                <label>
-                    <input type="radio" name="operation" value="subtraction">
-                    Subtraction only
-                </label>
+                <legend>Addition up to <input type="number" id="additionUpperLimit" value="20" min="5" max="100"></legend>
+                <div class="fieldset-row">
+                    <span class="field-label">Digits:</span>
+                    <label>
+                        <input type="radio" name="additionDigitMode" value="single" checked>
+                        Single (1-9)
+                    </label>
+                    <label>
+                        <input type="radio" name="additionDigitMode" value="double">
+                        Double (10+)
+                    </label>
+                </div>
+                <div class="fieldset-row">
+                    <span class="field-label">Hidden:</span>
+                    <label>
+                        <input type="radio" name="additionMissing" value="answer" checked>
+                        Answer
+                    </label>
+                    <label>
+                        <input type="radio" name="additionMissing" value="operand">
+                        Operand
+                    </label>
+                </div>
             </fieldset>
 
             <fieldset>
-                <legend>Number Range</legend>
-                <label>
-                    Upper limit:
-                    <input type="number" id="upperLimit" value="20" min="5" max="100">
-                </label>
-                <label>
-                    <input type="radio" name="digitMode" value="single" checked>
-                    Single digit (1-9)
-                </label>
-                <label>
-                    <input type="radio" name="digitMode" value="double">
-                    Double digit (10+)
-                </label>
-                <label>
-                    <input type="radio" name="digitMode" value="mixed">
-                    Mixed
-                </label>
-            </fieldset>
-
-            <fieldset>
-                <legend>Missing Value</legend>
-                <label>
-                    <input type="radio" name="missingValue" value="answer" checked>
-                    Answer (a + b = _)
-                </label>
-                <label>
-                    <input type="radio" name="missingValue" value="first">
-                    First operand (_ + b = c)
-                </label>
-                <label>
-                    <input type="radio" name="missingValue" value="second">
-                    Second operand (a + _ = c)
-                </label>
-                <label>
-                    <input type="radio" name="missingValue" value="random">
-                    Random
-                </label>
+                <legend>Subtraction up to <input type="number" id="subtractionUpperLimit" value="20" min="5" max="100"></legend>
+                <div class="fieldset-row">
+                    <span class="field-label">Digits:</span>
+                    <label>
+                        <input type="radio" name="subtractionDigitMode" value="single" checked>
+                        Single (1-9)
+                    </label>
+                    <label>
+                        <input type="radio" name="subtractionDigitMode" value="double">
+                        Double (10+)
+                    </label>
+                </div>
+                <div class="fieldset-row">
+                    <span class="field-label">Hidden:</span>
+                    <label>
+                        <input type="radio" name="subtractionMissing" value="answer" checked>
+                        Answer
+                    </label>
+                    <label>
+                        <input type="radio" name="subtractionMissing" value="operand">
+                        Operand
+                    </label>
+                </div>
             </fieldset>
 
             <fieldset>

@@ -1,5 +1,4 @@
 const configForm = document.getElementById('config');
-const upperLimitInput = document.getElementById('upperLimit');
 const equationCountInput = document.getElementById('equationCount');
 const generateBtn = document.getElementById('generateBtn');
 const equationsContainer = document.getElementById('equations');
@@ -14,11 +13,17 @@ function getRadioValue(name) {
 
 function getConfig() {
     return {
-        operation: getRadioValue('operation'),
-        upperLimit: parseInt(upperLimitInput.value, 10),
-        equationCount: parseInt(equationCountInput.value, 10),
-        digitMode: getRadioValue('digitMode'),
-        missingValue: getRadioValue('missingValue')
+        addition: {
+            upperLimit: parseInt(document.getElementById('additionUpperLimit').value, 10),
+            digitMode: getRadioValue('additionDigitMode'),
+            missing: getRadioValue('additionMissing')
+        },
+        subtraction: {
+            upperLimit: parseInt(document.getElementById('subtractionUpperLimit').value, 10),
+            digitMode: getRadioValue('subtractionDigitMode'),
+            missing: getRadioValue('subtractionMissing')
+        },
+        equationCount: parseInt(equationCountInput.value, 10)
     };
 }
 
@@ -28,7 +33,6 @@ function getOperandRange(digitMode, upperLimit) {
             return { min: 1, max: Math.min(9, upperLimit) };
         case 'double':
             return { min: 10, max: upperLimit };
-        case 'mixed':
         default:
             return { min: 1, max: upperLimit };
     }
@@ -38,8 +42,8 @@ function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function generateEquation(config, existingEquations) {
-    const { operation, upperLimit, digitMode, missingValue } = config;
+function generateEquation(opConfig, op, existingEquations) {
+    const { upperLimit, digitMode, missing } = opConfig;
     const range = getOperandRange(digitMode, upperLimit);
 
     const maxAttempts = 1000;
@@ -48,31 +52,17 @@ function generateEquation(config, existingEquations) {
     while (attempts < maxAttempts) {
         attempts++;
 
-        // Determine operation for this equation
-        let op;
-        if (operation === 'both') {
-            op = Math.random() < 0.5 ? '+' : '-';
-        } else if (operation === 'addition') {
-            op = '+';
-        } else {
-            op = '-';
-        }
-
         let a, b, c;
 
         if (op === '+') {
-            // For addition: a + b = c, where c <= upperLimit
-            // We need a and b from the range, and their sum <= upperLimit
             a = randomInt(range.min, Math.min(range.max, upperLimit - range.min));
             const maxB = Math.min(range.max, upperLimit - a);
             if (maxB < range.min) continue;
             b = randomInt(range.min, maxB);
             c = a + b;
         } else {
-            // For subtraction: a - b = c, where c >= 0 and a <= upperLimit
-            // a must be at least range.min + range.min to allow valid b
             a = randomInt(Math.max(range.min, range.min * 2), Math.min(range.max, upperLimit));
-            const maxB = Math.min(range.max, a - 1); // c must be >= 0, so b < a for positive result
+            const maxB = Math.min(range.max, a - 1);
             if (maxB < range.min) continue;
             b = randomInt(range.min, maxB);
             c = a - b;
@@ -80,20 +70,18 @@ function generateEquation(config, existingEquations) {
         }
 
         // Determine which value to hide
-        let missing;
-        if (missingValue === 'random') {
-            const options = ['answer', 'first', 'second'];
-            missing = options[Math.floor(Math.random() * options.length)];
+        let missingValue;
+        if (missing === 'operand') {
+            missingValue = Math.random() < 0.5 ? 'first' : 'second';
         } else {
-            missing = missingValue;
+            missingValue = 'answer';
         }
 
-        // Create equation key for duplicate checking
-        const key = `${a}${op}${b}=${c}:${missing}`;
+        const key = `${a}${op}${b}=${c}:${missingValue}`;
 
         if (!existingEquations.has(key)) {
             existingEquations.add(key);
-            return { a, b, c, op, missing, key };
+            return { a, b, c, op, missing: missingValue, key };
         }
     }
 
@@ -126,15 +114,12 @@ function renderEquations() {
 
 function updateConfigSummary() {
     const config = getConfig();
-    const opText = config.operation === 'both' ? 'Addition & Subtraction' :
-                   config.operation === 'addition' ? 'Addition' : 'Subtraction';
-    const digitText = config.digitMode === 'single' ? 'Single digit' :
-                      config.digitMode === 'double' ? 'Double digit' : 'Mixed';
-    const missingText = config.missingValue === 'answer' ? 'Answer hidden' :
-                        config.missingValue === 'first' ? 'First operand hidden' :
-                        config.missingValue === 'second' ? 'Second operand hidden' : 'Random hidden';
+    const addDigit = config.addition.digitMode === 'single' ? 'single' : 'double';
+    const subDigit = config.subtraction.digitMode === 'single' ? 'single' : 'double';
+    const addMissing = config.addition.missing === 'answer' ? 'answer' : 'operand';
+    const subMissing = config.subtraction.missing === 'answer' ? 'answer' : 'operand';
 
-    configSummary.textContent = `${opText} | Up to ${config.upperLimit} | ${digitText} | ${missingText}`;
+    configSummary.textContent = `Addition up to ${config.addition.upperLimit} (${addDigit}, ${addMissing}) | Subtraction up to ${config.subtraction.upperLimit} (${subDigit}, ${subMissing})`;
 }
 
 function generateAllEquations() {
@@ -142,11 +127,30 @@ function generateAllEquations() {
     const existingKeys = new Set();
     equations = [];
 
-    for (let i = 0; i < config.equationCount; i++) {
-        const eq = generateEquation(config, existingKeys);
+    const halfCount = Math.floor(config.equationCount / 2);
+    const additionCount = halfCount;
+    const subtractionCount = config.equationCount - halfCount;
+
+    // Generate addition equations
+    for (let i = 0; i < additionCount; i++) {
+        const eq = generateEquation(config.addition, '+', existingKeys);
         if (eq) {
             equations.push(eq);
         }
+    }
+
+    // Generate subtraction equations
+    for (let i = 0; i < subtractionCount; i++) {
+        const eq = generateEquation(config.subtraction, '-', existingKeys);
+        if (eq) {
+            equations.push(eq);
+        }
+    }
+
+    // Shuffle equations
+    for (let i = equations.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [equations[i], equations[j]] = [equations[j], equations[i]];
     }
 
     updateConfigSummary();
@@ -158,7 +162,10 @@ function regenerateEquation(index) {
     const existingKeys = new Set(equations.map(eq => eq.key));
     existingKeys.delete(equations[index].key);
 
-    const newEq = generateEquation(config, existingKeys);
+    const currentOp = equations[index].op;
+    const opConfig = currentOp === '+' ? config.addition : config.subtraction;
+
+    const newEq = generateEquation(opConfig, currentOp, existingKeys);
     if (newEq) {
         equations[index] = newEq;
         renderEquations();
