@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Equation Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Math Equation Generator</h1>
+        </header>
+
+        <form id="config">
+            <fieldset>
+                <legend>Addition up to <input type="number" id="additionUpperLimit" value="20" min="10"></legend>
+                <div class="fieldset-row">
+                    <span class="field-label">Digits:</span>
+                    <label>
+                        <input type="radio" name="additionDigitMode" value="single" checked>
+                        Single (1-9)
+                    </label>
+                    <label>
+                        <input type="radio" name="additionDigitMode" value="double">
+                        Double (1-99)
+                    </label>
+                </div>
+                <div class="fieldset-row">
+                    <span class="field-label">Hidden:</span>
+                    <label>
+                        <input type="radio" name="additionMissing" value="answer" checked>
+                        Answer
+                    </label>
+                    <label>
+                        <input type="radio" name="additionMissing" value="operand">
+                        Operand
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Subtraction up to <input type="number" id="subtractionUpperLimit" value="20" min="10"></legend>
+                <div class="fieldset-row">
+                    <span class="field-label">Digits:</span>
+                    <label>
+                        <input type="radio" name="subtractionDigitMode" value="single" checked>
+                        Single (1-9)
+                    </label>
+                    <label>
+                        <input type="radio" name="subtractionDigitMode" value="double">
+                        Double (1-99)
+                    </label>
+                </div>
+                <div class="fieldset-row">
+                    <span class="field-label">Hidden:</span>
+                    <label>
+                        <input type="radio" name="subtractionMissing" value="answer" checked>
+                        Answer
+                    </label>
+                    <label>
+                        <input type="radio" name="subtractionMissing" value="operand">
+                        Operand
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Quantity</legend>
+                <label>
+                    Number of equations:
+                    <input type="number" id="equationCount" value="20" min="1" max="50">
+                </label>
+            </fieldset>
+
+            <div class="print-only" id="configSummary"></div>
+
+            <div class="controls">
+                <button id="generateBtn" type="button">Generate Equations</button>
+            </div>
+        </form>
+
+        <hr>
+
+        <section id="equations"></section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
