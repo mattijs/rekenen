@@ -1,5 +1,5 @@
 const configForm = document.getElementById('config');
-const equationCountInput = document.getElementById('equationCount');
+const summaryContent = document.getElementById('summaryContent');
 const additionCountInput = document.getElementById('additionCount');
 const subtractionCountInput = document.getElementById('subtractionCount');
 const additionEnabledInput = document.getElementById('additionEnabled');
@@ -11,9 +11,7 @@ const configSummary = document.getElementById('configSummary');
 let equations = [];
 
 function updateTotalCount() {
-    const additionCount = additionEnabledInput.checked ? (parseInt(additionCountInput.value) || 0) : 0;
-    const subtractionCount = subtractionEnabledInput.checked ? (parseInt(subtractionCountInput.value) || 0) : 0;
-    equationCountInput.textContent = additionCount + subtractionCount;
+    updateConfigSummary();
 }
 
 function getRadioValue(name) {
@@ -22,20 +20,23 @@ function getRadioValue(name) {
 }
 
 function getConfig() {
+    const additionCount = parseInt(additionCountInput.value) || 0;
+    const subtractionCount = parseInt(subtractionCountInput.value) || 0;
+
     return {
         addition: {
             upperLimit: parseInt(document.getElementById('additionUpperLimit').value, 10),
             digitMode: getRadioValue('additionDigitMode'),
             missing: getRadioValue('additionMissing'),
-            count: parseInt(additionCountInput.value) || 0
+            count: additionCount
         },
         subtraction: {
             upperLimit: parseInt(document.getElementById('subtractionUpperLimit').value, 10),
             digitMode: getRadioValue('subtractionDigitMode'),
             missing: getRadioValue('subtractionMissing'),
-            count: parseInt(subtractionCountInput.value) || 0
+            count: subtractionCount
         },
-        equationCount: parseInt(equationCountInput.textContent, 10)
+        equationCount: additionCount + subtractionCount
     };
 }
 
@@ -129,8 +130,6 @@ function renderEquations() {
 
 function updateConfigSummary() {
     const config = getConfig();
-    const addDigit = config.addition.digitMode === 'single' ? 'single' : config.addition.digitMode === 'double' ? 'double' : 'any';
-    const subDigit = config.subtraction.digitMode === 'single' ? 'single' : config.subtraction.digitMode === 'double' ? 'double' : 'any';
     const getMissingLabel = (missing) => {
         switch (missing) {
             case 'answer': return 'answer';
@@ -140,10 +139,38 @@ function updateConfigSummary() {
             default: return missing;
         }
     };
-    const addMissing = getMissingLabel(config.addition.missing);
-    const subMissing = getMissingLabel(config.subtraction.missing);
 
-    configSummary.textContent = `Addition: ${config.addition.count}x up to ${config.addition.upperLimit} (${addDigit}, ${addMissing}) | Subtraction: ${config.subtraction.count}x up to ${config.subtraction.upperLimit} (${subDigit}, ${subMissing})`;
+    const enabledRules = [];
+    const additionCount = additionEnabledInput.checked ? (parseInt(additionCountInput.value) || 0) : 0;
+    const subtractionCount = subtractionEnabledInput.checked ? (parseInt(subtractionCountInput.value) || 0) : 0;
+    const totalCount = additionCount + subtractionCount;
+
+    // Only include addition if it's enabled
+    if (additionEnabledInput.checked) {
+        const addDigit = config.addition.digitMode === 'single' ? 'single' : config.addition.digitMode === 'double' ? 'double' : 'any';
+        const addMissing = getMissingLabel(config.addition.missing);
+        enabledRules.push(`${config.addition.count}x addition up to ${config.addition.upperLimit} with ${addDigit} digits and ${addMissing} hidden`);
+    }
+
+    // Only include subtraction if it's enabled
+    if (subtractionEnabledInput.checked) {
+        const subDigit = config.subtraction.digitMode === 'single' ? 'single' : config.subtraction.digitMode === 'double' ? 'double' : 'any';
+        const subMissing = getMissingLabel(config.subtraction.missing);
+        enabledRules.push(`${config.subtraction.count}x subtraction up to ${config.subtraction.upperLimit} with ${subDigit} digits and ${subMissing} hidden`);
+    }
+
+    // Update Summary box (visible in normal mode)
+    let summaryHTML = `<div>Equations: <strong>${totalCount}</strong></div>`;
+    summaryHTML += '<div>Configuration:</div>';
+    if (enabledRules.length > 0) {
+        summaryHTML += '<ul>' + enabledRules.map(rule => `<li>${rule}</li>`).join('') + '</ul>';
+    } else {
+        summaryHTML += '<div>No rules enabled</div>';
+    }
+    summaryContent.innerHTML = summaryHTML;
+
+    // Update print mode summary
+    configSummary.innerHTML = enabledRules.length > 0 ? enabledRules.join('<br>') : 'No rules enabled';
 }
 
 function generateAllEquations() {

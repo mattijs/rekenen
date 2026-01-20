@@ -175,6 +175,11 @@ hr {
     display: none;
 }
 
+#summaryContent ul {
+    padding-left: 0.5rem;
+    list-style-position: inside;
+}
+
 /* Print styles */
 @media print {
     body {
