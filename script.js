@@ -126,8 +126,8 @@ function renderEquations() {
 
 function updateConfigSummary() {
     const config = getConfig();
-    const addDigit = config.addition.digitMode === 'single' ? 'single' : 'double';
-    const subDigit = config.subtraction.digitMode === 'single' ? 'single' : 'double';
+    const addDigit = config.addition.digitMode === 'single' ? 'single' : config.addition.digitMode === 'double' ? 'double' : 'any';
+    const subDigit = config.subtraction.digitMode === 'single' ? 'single' : config.subtraction.digitMode === 'double' ? 'double' : 'any';
     const addMissing = config.addition.missing === 'answer' ? 'answer' : 'operand';
     const subMissing = config.subtraction.missing === 'answer' ? 'answer' : 'operand';
 
