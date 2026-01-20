@@ -67,6 +67,15 @@ fieldset.collapsed .fieldset-content {
     display: none;
 }
 
+fieldset.rule-disabled .fieldset-content {
+    opacity: 0.5;
+}
+
+fieldset.rule-disabled .fieldset-content input,
+fieldset.rule-disabled .fieldset-content select {
+    pointer-events: none;
+}
+
 .fieldset-row {
     display: flex;
     align-items: center;
