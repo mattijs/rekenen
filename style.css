@@ -37,11 +37,6 @@ legend {
     padding: 0 0.5rem;
 }
 
-legend input[type="number"] {
-    width: 4rem;
-    margin-left: 0.25rem;
-}
-
 .fieldset-row {
     display: flex;
     align-items: center;
@@ -54,7 +49,7 @@ legend input[type="number"] {
 }
 
 .field-label {
-    min-width: 4rem;
+    min-width: 5.5rem;
     font-weight: normal;
 }
 
@@ -62,12 +57,8 @@ fieldset label {
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    margin-right: 1rem;
+    min-width: 6rem;
     cursor: pointer;
-}
-
-fieldset label:last-child {
-    margin-right: 0;
 }
 
 select,
@@ -113,7 +104,7 @@ hr {
 .equation {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
     font-size: 1.25rem;
     font-family: monospace;
     padding: 0.25rem 0;
@@ -157,8 +148,8 @@ hr {
         margin-bottom: 0.5rem;
     }
 
-    .controls,
-    fieldset {
+    fieldset,
+    .controls {
         display: none;
     }
 

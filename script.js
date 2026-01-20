@@ -1,10 +1,18 @@
 const configForm = document.getElementById('config');
 const equationCountInput = document.getElementById('equationCount');
+const additionCountInput = document.getElementById('additionCount');
+const subtractionCountInput = document.getElementById('subtractionCount');
 const generateBtn = document.getElementById('generateBtn');
 const equationsContainer = document.getElementById('equations');
 const configSummary = document.getElementById('configSummary');
 
 let equations = [];
+
+function updateTotalCount() {
+    const additionCount = parseInt(additionCountInput.value) || 0;
+    const subtractionCount = parseInt(subtractionCountInput.value) || 0;
+    equationCountInput.textContent = additionCount + subtractionCount;
+}
 
 function getRadioValue(name) {
     const selected = configForm.querySelector(`input[name="${name}"]:checked`);
@@ -16,14 +24,16 @@ function getConfig() {
         addition: {
             upperLimit: parseInt(document.getElementById('additionUpperLimit').value, 10),
             digitMode: getRadioValue('additionDigitMode'),
-            missing: getRadioValue('additionMissing')
+            missing: getRadioValue('additionMissing'),
+            count: parseInt(additionCountInput.value) || 0
         },
         subtraction: {
             upperLimit: parseInt(document.getElementById('subtractionUpperLimit').value, 10),
             digitMode: getRadioValue('subtractionDigitMode'),
-            missing: getRadioValue('subtractionMissing')
+            missing: getRadioValue('subtractionMissing'),
+            count: parseInt(subtractionCountInput.value) || 0
         },
-        equationCount: parseInt(equationCountInput.value, 10)
+        equationCount: parseInt(equationCountInput.textContent, 10)
     };
 }
 
@@ -104,9 +114,9 @@ function renderEquations() {
         const div = document.createElement('div');
         div.className = 'equation';
         div.innerHTML = `
-            <span class="equation-number">${index + 1}.</span>
+            <span class="equation-number">${index + 1})</span>
             <span class="equation-text">${formatEquation(eq)}</span>
-            <button type="button" data-index="${index}">New</button>
+            <button type="button" data-index="${index}">🔄</button>
         `;
         equationsContainer.appendChild(div);
     });
@@ -119,7 +129,7 @@ function updateConfigSummary() {
     const addMissing = config.addition.missing === 'answer' ? 'answer' : 'operand';
     const subMissing = config.subtraction.missing === 'answer' ? 'answer' : 'operand';
 
-    configSummary.textContent = `Addition up to ${config.addition.upperLimit} (${addDigit}, ${addMissing}) | Subtraction up to ${config.subtraction.upperLimit} (${subDigit}, ${subMissing})`;
+    configSummary.textContent = `Addition: ${config.addition.count}x up to ${config.addition.upperLimit} (${addDigit}, ${addMissing}) | Subtraction: ${config.subtraction.count}x up to ${config.subtraction.upperLimit} (${subDigit}, ${subMissing})`;
 }
 
 function generateAllEquations() {
@@ -127,12 +137,8 @@ function generateAllEquations() {
     const existingKeys = new Set();
     equations = [];
 
-    const halfCount = Math.floor(config.equationCount / 2);
-    const additionCount = halfCount;
-    const subtractionCount = config.equationCount - halfCount;
-
     // Generate addition equations
-    for (let i = 0; i < additionCount; i++) {
+    for (let i = 0; i < config.addition.count; i++) {
         const eq = generateEquation(config.addition, '+', existingKeys);
         if (eq) {
             equations.push(eq);
@@ -140,7 +146,7 @@ function generateAllEquations() {
     }
 
     // Generate subtraction equations
-    for (let i = 0; i < subtractionCount; i++) {
+    for (let i = 0; i < config.subtraction.count; i++) {
         const eq = generateEquation(config.subtraction, '-', existingKeys);
         if (eq) {
             equations.push(eq);
@@ -173,6 +179,9 @@ function regenerateEquation(index) {
 }
 
 generateBtn.addEventListener('click', generateAllEquations);
+
+additionCountInput.addEventListener('input', updateTotalCount);
+subtractionCountInput.addEventListener('input', updateTotalCount);
 
 equationsContainer.addEventListener('click', (e) => {
     if (e.target.tagName === 'BUTTON' && e.target.dataset.index !== undefined) {
