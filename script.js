@@ -2,6 +2,8 @@ const configForm = document.getElementById('config');
 const equationCountInput = document.getElementById('equationCount');
 const additionCountInput = document.getElementById('additionCount');
 const subtractionCountInput = document.getElementById('subtractionCount');
+const additionEnabledInput = document.getElementById('additionEnabled');
+const subtractionEnabledInput = document.getElementById('subtractionEnabled');
 const generateBtn = document.getElementById('generateBtn');
 const equationsContainer = document.getElementById('equations');
 const configSummary = document.getElementById('configSummary');
@@ -9,8 +11,8 @@ const configSummary = document.getElementById('configSummary');
 let equations = [];
 
 function updateTotalCount() {
-    const additionCount = parseInt(additionCountInput.value) || 0;
-    const subtractionCount = parseInt(subtractionCountInput.value) || 0;
+    const additionCount = additionEnabledInput.checked ? (parseInt(additionCountInput.value) || 0) : 0;
+    const subtractionCount = subtractionEnabledInput.checked ? (parseInt(subtractionCountInput.value) || 0) : 0;
     equationCountInput.textContent = additionCount + subtractionCount;
 }
 
@@ -138,18 +140,22 @@ function generateAllEquations() {
     equations = [];
 
     // Generate addition equations
-    for (let i = 0; i < config.addition.count; i++) {
-        const eq = generateEquation(config.addition, '+', existingKeys);
-        if (eq) {
-            equations.push(eq);
+    if (additionEnabledInput.checked) {
+        for (let i = 0; i < config.addition.count; i++) {
+            const eq = generateEquation(config.addition, '+', existingKeys);
+            if (eq) {
+                equations.push(eq);
+            }
         }
     }
 
     // Generate subtraction equations
-    for (let i = 0; i < config.subtraction.count; i++) {
-        const eq = generateEquation(config.subtraction, '-', existingKeys);
-        if (eq) {
-            equations.push(eq);
+    if (subtractionEnabledInput.checked) {
+        for (let i = 0; i < config.subtraction.count; i++) {
+            const eq = generateEquation(config.subtraction, '-', existingKeys);
+            if (eq) {
+                equations.push(eq);
+            }
         }
     }
 
@@ -198,6 +204,27 @@ document.querySelectorAll('.collapse-toggle').forEach(button => {
         button.setAttribute('aria-expanded', !isExpanded);
         button.textContent = isExpanded ? '+' : '−';
         fieldset.classList.toggle('collapsed', isExpanded);
+    });
+});
+
+// Rule toggle functionality
+document.querySelectorAll('.rule-toggle').forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+        const fieldset = checkbox.closest('fieldset');
+        const collapseBtn = fieldset.querySelector('.collapse-toggle');
+        const isDisabled = !checkbox.checked;
+
+        fieldset.classList.toggle('rule-disabled', isDisabled);
+        fieldset.querySelectorAll('.fieldset-content input, .fieldset-content select').forEach(input => {
+            input.disabled = isDisabled;
+        });
+
+        // Collapse when disabling, expand when enabling
+        fieldset.classList.toggle('collapsed', isDisabled);
+        collapseBtn.setAttribute('aria-expanded', !isDisabled);
+        collapseBtn.textContent = isDisabled ? '+' : '−';
+
+        updateTotalCount();
     });
 });
 
