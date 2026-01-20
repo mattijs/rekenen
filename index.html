@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Equation Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Math Equation Generator</h1>
+        </header>
+
+        <section id="config">
+            <div class="config-row">
+                <label>
+                    Operation:
+                    <select id="operation">
+                        <option value="both">Addition & Subtraction</option>
+                        <option value="addition">Addition only</option>
+                        <option value="subtraction">Subtraction only</option>
+                    </select>
+                </label>
+
+                <label>
+                    Upper limit:
+                    <input type="number" id="upperLimit" value="20" min="5" max="100">
+                </label>
+
+                <label>
+                    Number of equations:
+                    <input type="number" id="equationCount" value="20" min="1" max="50">
+                </label>
+            </div>
+
+            <div class="config-row">
+                <label>
+                    Digit mode:
+                    <select id="digitMode">
+                        <option value="single">Single digit (1-9)</option>
+                        <option value="double">Double digit (10+)</option>
+                        <option value="mixed">Mixed</option>
+                    </select>
+                </label>
+
+                <label>
+                    Missing value:
+                    <select id="missingValue">
+                        <option value="answer">Answer (a + b = _)</option>
+                        <option value="first">First operand (_ + b = c)</option>
+                        <option value="second">Second operand (a + _ = c)</option>
+                        <option value="random">Random</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="config-row print-only" id="configSummary"></div>
+
+            <div class="controls">
+                <button id="generateBtn" type="button">Generate Equations</button>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="equations"></section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
