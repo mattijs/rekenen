@@ -83,8 +83,11 @@ function generateEquation(opConfig, op, existingEquations) {
 
         // Determine which value to hide
         let missingValue;
-        if (missing === 'operand') {
-            missingValue = Math.random() < 0.5 ? 'first' : 'second';
+        if (missing === 'random') {
+            const options = ['answer', 'first', 'second'];
+            missingValue = options[Math.floor(Math.random() * options.length)];
+        } else if (missing === 'first' || missing === 'second' || missing === 'answer') {
+            missingValue = missing;
         } else {
             missingValue = 'answer';
         }
@@ -128,8 +131,17 @@ function updateConfigSummary() {
     const config = getConfig();
     const addDigit = config.addition.digitMode === 'single' ? 'single' : config.addition.digitMode === 'double' ? 'double' : 'any';
     const subDigit = config.subtraction.digitMode === 'single' ? 'single' : config.subtraction.digitMode === 'double' ? 'double' : 'any';
-    const addMissing = config.addition.missing === 'answer' ? 'answer' : 'operand';
-    const subMissing = config.subtraction.missing === 'answer' ? 'answer' : 'operand';
+    const getMissingLabel = (missing) => {
+        switch (missing) {
+            case 'answer': return 'answer';
+            case 'first': return 'left operand';
+            case 'second': return 'right operand';
+            case 'random': return 'random';
+            default: return missing;
+        }
+    };
+    const addMissing = getMissingLabel(config.addition.missing);
+    const subMissing = getMissingLabel(config.subtraction.missing);
 
     configSummary.textContent = `Addition: ${config.addition.count}x up to ${config.addition.upperLimit} (${addDigit}, ${addMissing}) | Subtraction: ${config.subtraction.count}x up to ${config.subtraction.upperLimit} (${subDigit}, ${subMissing})`;
 }
