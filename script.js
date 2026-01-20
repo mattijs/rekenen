@@ -1,21 +1,24 @@
-const operationSelect = document.getElementById('operation');
+const configForm = document.getElementById('config');
 const upperLimitInput = document.getElementById('upperLimit');
 const equationCountInput = document.getElementById('equationCount');
-const digitModeSelect = document.getElementById('digitMode');
-const missingValueSelect = document.getElementById('missingValue');
 const generateBtn = document.getElementById('generateBtn');
 const equationsContainer = document.getElementById('equations');
 const configSummary = document.getElementById('configSummary');
 
 let equations = [];
 
+function getRadioValue(name) {
+    const selected = configForm.querySelector(`input[name="${name}"]:checked`);
+    return selected ? selected.value : null;
+}
+
 function getConfig() {
     return {
-        operation: operationSelect.value,
+        operation: getRadioValue('operation'),
         upperLimit: parseInt(upperLimitInput.value, 10),
         equationCount: parseInt(equationCountInput.value, 10),
-        digitMode: digitModeSelect.value,
-        missingValue: missingValueSelect.value
+        digitMode: getRadioValue('digitMode'),
+        missingValue: getRadioValue('missingValue')
     };
 }
 
