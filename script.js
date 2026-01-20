@@ -57,7 +57,24 @@ function randomInt(min, max) {
 
 function generateEquation(opConfig, op, existingEquations) {
     const { upperLimit, digitMode, missing } = opConfig;
-    const range = getOperandRange(digitMode, upperLimit);
+
+    // For 'single' mode, randomly choose which operand is single digit ONCE
+    let rangeA, rangeB;
+
+    if (digitMode === 'single') {
+        // Randomly choose which operand gets the single digit constraint (once per equation)
+        const singleOperandIsA = Math.random() < 0.5;
+        const singleRange = { min: 1, max: Math.min(9, upperLimit) };
+        const anyRange = { min: 1, max: upperLimit };
+
+        rangeA = singleOperandIsA ? singleRange : anyRange;
+        rangeB = singleOperandIsA ? anyRange : singleRange;
+    } else {
+        // For 'double' and 'any', both operands use the same range
+        const range = getOperandRange(digitMode, upperLimit);
+        rangeA = range;
+        rangeB = range;
+    }
 
     const maxAttempts = 1000;
     let attempts = 0;
@@ -68,16 +85,16 @@ function generateEquation(opConfig, op, existingEquations) {
         let a, b, c;
 
         if (op === '+') {
-            a = randomInt(range.min, Math.min(range.max, upperLimit - range.min));
-            const maxB = Math.min(range.max, upperLimit - a);
-            if (maxB < range.min) continue;
-            b = randomInt(range.min, maxB);
+            a = randomInt(rangeA.min, Math.min(rangeA.max, upperLimit - rangeB.min));
+            const maxB = Math.min(rangeB.max, upperLimit - a);
+            if (maxB < rangeB.min) continue;
+            b = randomInt(rangeB.min, maxB);
             c = a + b;
         } else {
-            a = randomInt(Math.max(range.min, range.min * 2), Math.min(range.max, upperLimit));
-            const maxB = Math.min(range.max, a - 1);
-            if (maxB < range.min) continue;
-            b = randomInt(range.min, maxB);
+            a = randomInt(Math.max(rangeA.min, rangeB.min * 2), Math.min(rangeA.max, upperLimit));
+            const maxB = Math.min(rangeB.max, a - 1);
+            if (maxB < rangeB.min) continue;
+            b = randomInt(rangeB.min, maxB);
             c = a - b;
             if (c < 0) continue;
         }
