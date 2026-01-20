@@ -79,7 +79,7 @@ fieldset.rule-disabled .fieldset-content select {
 .fieldset-row {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
     margin-bottom: 0.5rem;
 }
 
@@ -96,7 +96,7 @@ fieldset label {
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    min-width: 6rem;
+    min-width: 5rem;
     cursor: pointer;
 }
 
