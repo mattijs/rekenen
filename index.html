@@ -13,8 +13,10 @@
         </header>
 
         <form id="config">
-            <fieldset>
+            <fieldset id="additionFieldset">
                 <legend>Addition</legend>
+                <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="additionContent">−</button>
+                <div id="additionContent" class="fieldset-content">
                 <div class="fieldset-row">
                     <span class="field-label">Up to:</span>
                     <input type="number" id="additionUpperLimit" value="20" min="10">
@@ -45,10 +47,13 @@
                     <span class="field-label">Equations:</span>
                     <input type="number" id="additionCount" value="10" min="0" max="50">
                 </div>
+                </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset id="subtractionFieldset">
                 <legend>Subtraction</legend>
+                <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="subtractionContent">−</button>
+                <div id="subtractionContent" class="fieldset-content">
                 <div class="fieldset-row">
                     <span class="field-label">Up to:</span>
                     <input type="number" id="subtractionUpperLimit" value="20" min="10">
@@ -78,6 +83,7 @@
                 <div class="fieldset-row">
                     <span class="field-label">Equations:</span>
                     <input type="number" id="subtractionCount" value="10" min="0" max="50">
+                </div>
                 </div>
             </fieldset>
 
