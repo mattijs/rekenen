@@ -159,9 +159,22 @@ hr {
     flex: 1;
 }
 
+.equation .num {
+    display: inline-block;
+    width: 3ch;
+}
+
+.equation .num.align-center {
+    text-align: center;
+}
+
+.equation .num.align-left {
+    text-align: left;
+}
+
 .equation .blank {
     display: inline-block;
-    min-width: 2rem;
+    width: 3ch;
     border-bottom: 2px solid #000;
     text-align: center;
 }
@@ -224,7 +237,11 @@ hr {
         display: none;
     }
 
+    .equation .num {
+        width: 3ch;
+    }
+
     .equation .blank {
-        min-width: 1.5rem;
+        width: 3ch;
     }
 }

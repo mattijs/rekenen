@@ -104,11 +104,18 @@ function generateEquation(opConfig, op, existingEquations) {
     return null;
 }
 
+function formatNumber(num) {
+    const numStr = String(num);
+    const digitCount = numStr.length;
+    const alignClass = digitCount === 1 ? 'center' : 'left';
+    return `<span class="num align-${alignClass}">${num}</span>`;
+}
+
 function formatEquation(eq) {
     const blank = '<span class="blank"></span>';
-    const aDisplay = eq.missing === 'first' ? blank : eq.a;
-    const bDisplay = eq.missing === 'second' ? blank : eq.b;
-    const cDisplay = eq.missing === 'answer' ? blank : eq.c;
+    const aDisplay = eq.missing === 'first' ? blank : formatNumber(eq.a);
+    const bDisplay = eq.missing === 'second' ? blank : formatNumber(eq.b);
+    const cDisplay = eq.missing === 'answer' ? blank : formatNumber(eq.c);
 
     return `${aDisplay} ${eq.op} ${bDisplay} = ${cDisplay}`;
 }
