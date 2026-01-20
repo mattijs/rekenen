@@ -12,4 +12,4 @@
 - [x] Update the selection for Hidden to have Answer, Left Operand, Right Operand and Random as options
 - [x] Toggling Single for digits should only change one of the operands to single digit. This should also account for hidden operands.
 - [ ] Align the beginning of all equations and take the numbering before the equations into account.
-- [ ] Selecting Subtraction with up to 20 and double digits makes all equations start with 20. This is not correct and needs to be fixed.
+- [x] Selecting Subtraction with up to 20 and double digits makes all equations start with 20. This is not correct and needs to be fixed.

@@ -91,7 +91,8 @@ function generateEquation(opConfig, op, existingEquations) {
             b = randomInt(rangeB.min, maxB);
             c = a + b;
         } else {
-            a = randomInt(Math.max(rangeA.min, rangeB.min * 2), Math.min(rangeA.max, upperLimit));
+            // For subtraction, ensure a > b. Minimum a needs to be greater than rangeB.min
+            a = randomInt(Math.max(rangeA.min, rangeB.min + 1), Math.min(rangeA.max, upperLimit));
             const maxB = Math.min(rangeB.max, a - 1);
             if (maxB < rangeB.min) continue;
             b = randomInt(rangeB.min, maxB);
