@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication & Division</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Multiplication & Division</h1>
+            <a href="../" class="back-link">All exercises →</a>
+        </header>
+
+        <form id="config">
+            <fieldset id="multiplicationFieldset">
+                <legend>
+                    <input type="checkbox" class="rule-toggle" id="multiplicationEnabled" checked>
+                    Multiplication
+                </legend>
+                <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="multiplicationContent">−</button>
+                <div id="multiplicationContent" class="fieldset-content">
+                <div class="fieldset-row">
+                    <span class="field-label">Tables:</span>
+                    <div class="table-selection">
+                        <div class="table-buttons">
+                            <button type="button" class="link-button select-all-btn" data-prefix="multiplication">Select all</button>
+                            <button type="button" class="link-button select-none-btn" data-prefix="multiplication">Select none</button>
+                        </div>
+                        <div class="table-grid">
+                            <label><input type="checkbox" name="multiplicationTable" value="1" checked> 1</label>
+                            <label><input type="checkbox" name="multiplicationTable" value="2" checked> 2</label>
+                            <label><input type="checkbox" name="multiplicationTable" value="3" checked> 3</label>
+                            <label><input type="checkbox" name="multiplicationTable" value="4" checked> 4</label>
+                            <label><input type="checkbox" name="multiplicationTable" value="5" checked> 5</label>
+                            <label><input type="checkbox" name="multiplicationTable" value="6" checked> 6</label>
+                            <label><input type="checkbox" name="multiplicationTable" value="7" checked> 7</label>
+                            <label><input type="checkbox" name="multiplicationTable" value="8" checked> 8</label>
+                            <label><input type="checkbox" name="multiplicationTable" value="9" checked> 9</label>
+                            <label><input type="checkbox" name="multiplicationTable" value="10" checked> 10</label>
+                            <label><input type="checkbox" name="multiplicationTable" value="11" checked> 11</label>
+                            <label><input type="checkbox" name="multiplicationTable" value="12" checked> 12</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="fieldset-row">
+                    <span class="field-label">Form:</span>
+                    <label>
+                        <input type="radio" name="multiplicationForm" value="standard">
+                        Standard
+                    </label>
+                    <label>
+                        <input type="radio" name="multiplicationForm" value="secondary" checked>
+                        Secondary
+                    </label>
+                </div>
+                <div class="fieldset-row">
+                    <span class="field-label">Mode:</span>
+                    <label>
+                        <input type="radio" name="multiplicationMode" value="all" checked>
+                        All
+                    </label>
+                    <label>
+                        <input type="radio" name="multiplicationMode" value="random">
+                        Random
+                    </label>
+                    <label>
+                        <input type="radio" name="multiplicationMode" value="custom">
+                        Custom
+                    </label>
+                    <input type="number" id="multiplicationCount" value="20" min="0" max="200" disabled>
+                </div>
+                <div class="fieldset-row">
+                    <span class="field-label">Hidden:</span>
+                    <label>
+                        <input type="radio" name="multiplicationMissing" value="answer" checked>
+                        Answer
+                    </label>
+                    <label>
+                        <input type="radio" name="multiplicationMissing" value="first">
+                        Left Op.
+                    </label>
+                    <label>
+                        <input type="radio" name="multiplicationMissing" value="second">
+                        Right Op.
+                    </label>
+                    <label>
+                        <input type="radio" name="multiplicationMissing" value="random">
+                        Random
+                    </label>
+                </div>
+                </div>
+            </fieldset>
+
+            <fieldset id="divisionFieldset">
+                <legend>
+                    <input type="checkbox" class="rule-toggle" id="divisionEnabled" checked>
+                    Division
+                </legend>
+                <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="divisionContent">−</button>
+                <div id="divisionContent" class="fieldset-content">
+                <div class="fieldset-row">
+                    <span class="field-label">Tables:</span>
+                    <div class="table-selection">
+                        <div class="table-buttons">
+                            <button type="button" class="link-button select-all-btn" data-prefix="division">Select all</button>
+                            <button type="button" class="link-button select-none-btn" data-prefix="division">Select none</button>
+                        </div>
+                        <div class="table-grid">
+                            <label><input type="checkbox" name="divisionTable" value="1" checked> 1</label>
+                            <label><input type="checkbox" name="divisionTable" value="2" checked> 2</label>
+                            <label><input type="checkbox" name="divisionTable" value="3" checked> 3</label>
+                            <label><input type="checkbox" name="divisionTable" value="4" checked> 4</label>
+                            <label><input type="checkbox" name="divisionTable" value="5" checked> 5</label>
+                            <label><input type="checkbox" name="divisionTable" value="6" checked> 6</label>
+                            <label><input type="checkbox" name="divisionTable" value="7" checked> 7</label>
+                            <label><input type="checkbox" name="divisionTable" value="8" checked> 8</label>
+                            <label><input type="checkbox" name="divisionTable" value="9" checked> 9</label>
+                            <label><input type="checkbox" name="divisionTable" value="10" checked> 10</label>
+                            <label><input type="checkbox" name="divisionTable" value="11" checked> 11</label>
+                            <label><input type="checkbox" name="divisionTable" value="12" checked> 12</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="fieldset-row">
+                    <span class="field-label">Form:</span>
+                    <label>
+                        <input type="radio" name="divisionForm" value="standard">
+                        Standard
+                    </label>
+                    <label>
+                        <input type="radio" name="divisionForm" value="secondary" checked>
+                        Secondary
+                    </label>
+                </div>
+                <div class="fieldset-row">
+                    <span class="field-label">Mode:</span>
+                    <label>
+                        <input type="radio" name="divisionMode" value="all" checked>
+                        All
+                    </label>
+                    <label>
+                        <input type="radio" name="divisionMode" value="random">
+                        Random
+                    </label>
+                    <label>
+                        <input type="radio" name="divisionMode" value="custom">
+                        Custom
+                    </label>
+                    <input type="number" id="divisionCount" value="20" min="0" max="200" disabled>
+                </div>
+                <div class="fieldset-row">
+                    <span class="field-label">Hidden:</span>
+                    <label>
+                        <input type="radio" name="divisionMissing" value="answer" checked>
+                        Answer
+                    </label>
+                    <label>
+                        <input type="radio" name="divisionMissing" value="first">
+                        Left Op.
+                    </label>
+                    <label>
+                        <input type="radio" name="divisionMissing" value="second">
+                        Right Op.
+                    </label>
+                    <label>
+                        <input type="radio" name="divisionMissing" value="random">
+                        Random
+                    </label>
+                </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Summary</legend>
+                <div id="summaryContent"></div>
+            </fieldset>
+
+            <div class="print-only" id="configSummary"></div>
+
+            <div class="controls">
+                <button id="generateBtn" type="button">Generate</button>
+                <button id="printBtn" type="button">Print</button>
+            </div>
+        </form>
+
+        <hr>
+
+        <section id="equations"></section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
