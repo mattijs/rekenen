@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Related Math Facts</title>
+    <link rel="stylesheet" href="related-facts.css">
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Related Math Facts</h1>
+        </header>
+
+        <form id="config">
+            <fieldset>
+                <legend>Configuration</legend>
+
+                <div class="fieldset-row">
+                    <span class="field-label">Up to:</span>
+                    <input type="number" id="upperLimit" value="20" min="10" max="100">
+                </div>
+
+                <div class="fieldset-row">
+                    <span class="field-label">Digits:</span>
+                    <label>
+                        <input type="radio" name="digitMode" value="any" checked>
+                        Any
+                    </label>
+                    <label>
+                        <input type="radio" name="digitMode" value="double">
+                        Double
+                    </label>
+                    <label>
+                        <input type="radio" name="digitMode" value="single">
+                        Single
+                    </label>
+                </div>
+
+                <div class="fieldset-row">
+                    <span class="field-label">Hidden:</span>
+                    <label>
+                        <input type="radio" name="missing" value="none" checked>
+                        None
+                    </label>
+                    <label>
+                        <input type="radio" name="missing" value="some">
+                        Some Values
+                    </label>
+                    <label>
+                        <input type="radio" name="missing" value="many">
+                        Many Values
+                    </label>
+                </div>
+
+                <div class="fieldset-row">
+                    <span class="field-label">Fact Families:</span>
+                    <input type="number" id="familyCount" value="5" min="1" max="20">
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Summary</legend>
+                <div id="summaryContent"></div>
+            </fieldset>
+
+            <div class="print-only" id="configSummary"></div>
+
+            <div class="controls">
+                <button id="generateBtn" type="button">Generate</button>
+            </div>
+        </form>
+
+        <hr>
+
+        <section id="factFamilies"></section>
+    </main>
+
+    <script src="related-facts.js"></script>
+</body>
+</html>
