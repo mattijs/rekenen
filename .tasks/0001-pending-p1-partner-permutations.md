@@ -38,7 +38,7 @@ This is an example of what this might look like:
 |  2  +  4  =  6  |
 | ___ + ___ = ___ |
 |  4  +  2  =  6  |
-|  1  +  5  =  6  |
+|  5  +  1  =  6  |
 |  6  +  0  =  6  |
 |-----------------|
 ```

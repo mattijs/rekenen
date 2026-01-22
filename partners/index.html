@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Permutations</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Partner Permutations</h1>
+            <a href="../" class="back-link">All exercises →</a>
+        </header>
+
+        <form id="config">
+            <fieldset id="partnersFieldset">
+                <legend>
+                    <input type="checkbox" class="rule-toggle" id="partnersToggle" checked>
+                    Partner Pairs
+                </legend>
+                <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="partnersContent">−</button>
+                <div id="partnersContent" class="fieldset-content">
+                    <div class="fieldset-row">
+                        <span class="field-label">Total:</span>
+                        <input type="number" id="partnersTotal" value="10" min="2" max="100">
+                    </div>
+                    <div class="fieldset-row">
+                        <span class="field-label">Digits:</span>
+                        <label>
+                            <input type="radio" name="partnersDigits" value="any" checked>
+                            Any
+                        </label>
+                        <label>
+                            <input type="radio" name="partnersDigits" value="single">
+                            Single
+                        </label>
+                        <label>
+                            <input type="radio" name="partnersDigits" value="double">
+                            Double
+                        </label>
+                    </div>
+                    <div class="fieldset-row">
+                        <span class="field-label">Hidden:</span>
+                        <label>
+                            <input type="radio" name="partnersHidden" value="answer" checked>
+                            Answer
+                        </label>
+                        <label>
+                            <input type="radio" name="partnersHidden" value="first">
+                            Left Op.
+                        </label>
+                        <label>
+                            <input type="radio" name="partnersHidden" value="second">
+                            Right Op.
+                        </label>
+                        <label>
+                            <input type="radio" name="partnersHidden" value="random">
+                            Random
+                        </label>
+                    </div>
+                    <div class="fieldset-row">
+                        <span class="field-label">Equations:</span>
+                        <input type="number" id="partnersCount" value="10" min="1" max="100">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset id="sequencesFieldset">
+                <legend>
+                    <input type="checkbox" class="rule-toggle" id="sequencesToggle" checked>
+                    Partner Sequences
+                </legend>
+                <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="sequencesContent">−</button>
+                <div id="sequencesContent" class="fieldset-content">
+                    <div class="fieldset-row">
+                        <span class="field-label">Total:</span>
+                        <input type="number" id="sequencesTotal" value="10" min="7" max="100">
+                    </div>
+                    <div class="fieldset-row">
+                        <span class="field-label">Sequences:</span>
+                        <input type="number" id="sequencesCount" value="6" min="1" max="20">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Summary</legend>
+                <div id="summaryContent"></div>
+            </fieldset>
+
+            <div class="print-only" id="configSummary"></div>
+
+            <div class="controls">
+                <button id="generateBtn" type="button">Generate</button>
+                <button id="printBtn" type="button">Print</button>
+            </div>
+        </form>
+
+        <hr>
+
+        <section id="equations"></section>
+        <section id="sequences"></section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
